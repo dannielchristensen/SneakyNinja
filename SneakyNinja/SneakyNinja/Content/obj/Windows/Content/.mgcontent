@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/danni/Documents/School/Spring 2021/GameJam/SneakyNinja/SneakyNinja/Content/Bangers.spritefont</File>
+    <File>C:/Users/danni/Documents/School/Spring 2021/GameJam/SneakyNinja/SneakyNinja/Content/dungeon_wall_32_r.png</File>
+    <File>C:/Users/danni/Documents/School/Spring 2021/GameJam/SneakyNinja/SneakyNinja/Content/eye_changing.png</File>
+    <File>C:/Users/danni/Documents/School/Spring 2021/GameJam/SneakyNinja/SneakyNinja/Content/hole.png</File>
+    <File>C:/Users/danni/Documents/School/Spring 2021/GameJam/SneakyNinja/SneakyNinja/Content/ninja.png</File>
+    <File>C:/Users/danni/Documents/School/Spring 2021/GameJam/SneakyNinja/SneakyNinja/Content/NinjaWarrior.mp3</File>
+    <File>C:/Users/danni/Documents/School/Spring 2021/GameJam/SneakyNinja/SneakyNinja/Content/scroll.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

@@ -1,0 +1,10 @@
+﻿Conent/hole - Created by Danniel Christensen for this Project
+
+Content/eye_changing - Created by Danniel Christensen for this Project
+
+Content/ninja - Created by Danniel Christensen for this Project
+
+Content/scroll - Created by Danniel Christensen for this Project
+
+Content/Bangers/Bangers-Regular.ttf - Bangers font created by Vernon Adams, released on Google Fonts (https://fonts.google.com/specimen/Bangers) under the Open Font License
+
