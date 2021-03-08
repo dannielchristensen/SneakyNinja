@@ -8,7 +8,7 @@ using SneakyNinja.Collisions;
 
 namespace SneakyNinja
 {
-    public class Wall
+    public class WallSprite
     {
         private Random r = new Random();
         private Vector2 position;
@@ -18,7 +18,7 @@ namespace SneakyNinja
 
         public BoundingRectangle Bounds => bounds;
         public Vector2 Position => position;
-        public Wall(SneakyNinjas game)
+        public WallSprite(SneakyNinjas game)
         {
             position = new Vector2(r.Next(5, 21)*32, r.Next(4, 12)*32);
             bounds = new BoundingRectangle(Position.X, Position.Y, 30, 30);

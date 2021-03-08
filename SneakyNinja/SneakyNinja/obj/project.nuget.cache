@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HZGohe2hzvSzZKnPAQSL5Oi8aMYpLnUtw/2ZSAJEyuOQdYEfj6ZoHicM9lNk1k/kIUlQkvsu45lIiiWUvw8suw==",
+  "dgSpecHash": "NEFPztJSY3x9+E8PKmR7/+Q2pLSj4qk6Tvb+lW2/4O8fMSTecNX3DJc+CiGiPV0g7Xy0XGivJaKO5H8f42cLbg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\GameJam\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
+  "projectFilePath": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\danni\\.nuget\\packages\\libuv\\1.9.1\\libuv.1.9.1.nupkg.sha512",
     "C:\\Users\\danni\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\1.1.0\\microsoft.codeanalysis.analyzers.1.1.0.nupkg.sha512",

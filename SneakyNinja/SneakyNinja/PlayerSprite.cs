@@ -8,7 +8,7 @@ using SneakyNinja.Collisions;
 
 namespace SneakyNinja
 {
-    public class Player
+    public class PlayerSprite
     {
         public Vector2 Coord = new Vector2(0, 0);
         public Vector2 Position
@@ -30,7 +30,7 @@ namespace SneakyNinja
         private BoundingRectangle bounds;
         public BoundingRectangle Bounds => bounds;
 
-        public Player(SneakyNinjas game, Vector2 coord, Vector2 position)
+        public PlayerSprite(SneakyNinjas game, Vector2 coord, Vector2 position)
         {
             this.game = game;
             Coord = coord;
@@ -43,7 +43,7 @@ namespace SneakyNinja
             texture = game.Content.Load<Texture2D>("ninja");
         }
 
-        public void Update(GameTime gameTime, Wall[] walls, EyeSpawn eye)
+        public void Update(GameTime gameTime, WallSprite[] walls, EyeSprite eye)
         {
             priorState = currentState;
             currentState = Keyboard.GetState();
@@ -99,7 +99,7 @@ namespace SneakyNinja
             bounds.X = this.Position.X+16;
             bounds.Y = this.Position.Y+16;
         }
-        public void checkWalls(EyeSpawn eye, Wall[] walls, Vector2 added_pos)
+        public void checkWalls(EyeSprite eye, WallSprite[] walls, Vector2 added_pos)
         {
             Position += added_pos;
             if (eye!= null && eye.Bounds.CollidesWith(bounds))
@@ -108,7 +108,7 @@ namespace SneakyNinja
                 return;
             }
 
-            foreach (Wall w in walls)
+            foreach (WallSprite w in walls)
             {
                 if (bounds.CollidesWith(w.Bounds))
                 {

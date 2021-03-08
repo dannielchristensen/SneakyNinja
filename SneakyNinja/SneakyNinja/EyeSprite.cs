@@ -15,7 +15,7 @@ namespace SneakyNinja
         Left,
         Down
     }
-    public class EyeSpawn
+    public class EyeSprite
     {
         private Room room;
         private int directionAnimation = 1;
@@ -30,17 +30,9 @@ namespace SneakyNinja
         private Texture2D texture;
 
 
-        public EyeSpawn(Room r, SneakyNinjas game)
+        public EyeSprite(Room r, SneakyNinjas game)
         {
             spawn();
-            for (int i = 0; i < r.Walls.Length; i++)
-            {
-                if (bounds.CollidesWith(r.Walls[i].Bounds) || ( r.Scroll != null && bounds.CollidesWith(r.Scroll.Bounds)))
-                {
-                    spawn();
-                    i = 0;
-                }
-            }
             room = r;
             this.game = game;
 

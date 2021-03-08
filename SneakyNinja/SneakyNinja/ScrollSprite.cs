@@ -8,7 +8,7 @@ using SneakyNinja.Collisions;
 
 namespace SneakyNinja
 {
-    public class Scroll
+    public class ScrollSprite
     {
         private Room room;
         private SneakyNinjas game;
@@ -32,8 +32,13 @@ namespace SneakyNinja
             }
         }
         public BoundingRectangle Bounds => bounds;
-
-        public Scroll(Room r, SneakyNinjas g)
+        public ScrollSprite(SneakyNinjas game)
+        {
+            this.game = game;
+            position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
+            bounds = new BoundingRectangle(Position, 32, 32);
+        }
+        public ScrollSprite(Room r, SneakyNinjas g)
         {
             room = r;
             game = g;

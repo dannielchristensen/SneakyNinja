@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\danni\\Documents\\School\\Spring 2021\\GameJam\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj": {}
+    "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj": {}
   },
   "projects": {
-    "C:\\Users\\danni\\Documents\\School\\Spring 2021\\GameJam\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj": {
+    "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\GameJam\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
+        "projectUniqueName": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
         "projectName": "SneakyNinja",
-        "projectPath": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\GameJam\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
+        "projectPath": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
         "packagesPath": "C:\\Users\\danni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\GameJam\\SneakyNinja\\SneakyNinja\\obj\\",
+        "outputPath": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\danni\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -67,7 +67,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

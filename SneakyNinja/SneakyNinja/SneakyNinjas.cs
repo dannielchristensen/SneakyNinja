@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using Microsoft.Xna.Framework.Media;
 using SneakyNinja.Collisions;
+using SneakyNinja.Screens;
 
 namespace SneakyNinja
 {
@@ -13,52 +14,67 @@ namespace SneakyNinja
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
-        private Room[,] map = new Room[2,2];
-        private Player player;
+        //private Room[,] map = new Room[2,2];
+        private PlayerSprite player;
         private bool hasScroll = false;
         private bool detected = false;
         private double detectedTimer = 20;
         private SpriteFont bangers;
-        public Vector2 userRoomPosition;
         private bool gameOver = false;
         private double totalTime = 0;
         private bool playerWins = false;
         private double fastestTime;
         private Song backgroundMusic;
 
+        private readonly ScreenManager _screenManager;
 
         public SneakyNinjas()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            var screenFactory = new ScreenFactory();
+            Services.AddService(typeof(IScreenFactory), screenFactory);
+            _screenManager = new ScreenManager(this);
+            Components.Add(_screenManager);
+
+            AddInitialScreens();
+        }
+        private void AddInitialScreens()
+        {
+            _screenManager.AddScreen(new TopLeftCornerRoomScreen(this));
+
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+           // _screenManager.AddScreen(new BackgroundScreen(), null);
+
+
+            /*
             map[0,0] = new Room(this, (RoomType)0);
             map[0,1] = new Room(this, (RoomType)1);
             map[1,0] = new Room(this, (RoomType)2);
             map[1,1] = new Room(this, (RoomType)3);
 
             userRoomPosition = new Vector2(0, 0);
-            player = new Player(this, userRoomPosition, new Vector2(96, 96));
             map[0, 0].Exit.Position = player.Position;
             map[0, 0].Exit.Bounds = new BoundingCircle(map[0, 0].Exit.Position + new Vector2(16, 16), 16);
-
+            */
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            /*
             map[0, 0].LoadContent();
             map[0, 1].LoadContent();
             map[1, 0].LoadContent();
             map[1, 1].LoadContent();
             bangers = Content.Load<SpriteFont>("bangers");
-            player.LoadContent();
+            */
             backgroundMusic = Content.Load<Song>("NinjaWarrior");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(backgroundMusic);
@@ -68,6 +84,7 @@ namespace SneakyNinja
 
         protected override void Update(GameTime gameTime)
         {
+            /*
             KeyboardState currentKeys = Keyboard.GetState();
             if (currentKeys.IsKeyDown(Keys.Escape))
                 Exit();
@@ -77,7 +94,7 @@ namespace SneakyNinja
                 map[0, 1].Scroll = null;
                 map[1, 0].Scroll = null;
                 userRoomPosition = new Vector2(0, 0);
-                player = new Player(this, userRoomPosition, new Vector2(64, 64));
+                player = new PlayerSprite(this, userRoomPosition, new Vector2(64, 64));
                 map[1, 1].Scroll.Reset();
                 detected = false;
                 detectedTimer = 20;
@@ -98,7 +115,7 @@ namespace SneakyNinja
                 fastestTime = 0;
                 playerWins = false;
                 userRoomPosition = new Vector2(0, 0);
-                player = new Player(this, userRoomPosition, new Vector2(64, 64));
+                player = new PlayerSprite(this, userRoomPosition, new Vector2(64, 64));
                 map[0, 0] = new Room(this, (RoomType)0);
                 map[0, 1] = new Room(this, (RoomType)1);
                 map[1, 0] = new Room(this, (RoomType)2);
@@ -128,7 +145,8 @@ namespace SneakyNinja
 
             // TODO: Add your update logic here
 
-            if (player.Bounds.CollidesWith(cur.door_x))
+            if (player.Bounds.CollidesWith(cur.
+                ))
             {
                 if(userRoomPosition.Y == 0)
                 {
@@ -165,7 +183,7 @@ namespace SneakyNinja
             if(cur.Eye != null && cur.Eye.Vision.CollidesWith(player.Bounds))
             {
                 bool isHidden = false;
-                foreach(Wall w in cur.Walls)
+                foreach(WallSprite w in cur.Walls)
                 {
                     if (cur.Eye.Vision.CollidesWith(w.Bounds))
                     {
@@ -202,6 +220,7 @@ namespace SneakyNinja
                 if (totalTime < fastestTime)
                     fastestTime = totalTime;
             }
+            */
             base.Update(gameTime);
 
         }
@@ -210,7 +229,7 @@ namespace SneakyNinja
         {
 
             GraphicsDevice.Clear(Color.Gray);
-            spriteBatch.Begin();
+           /* spriteBatch.Begin();
 
             // TODO: Add your drawing code here
 
@@ -255,11 +274,11 @@ namespace SneakyNinja
                 spriteBatch.DrawString(bangers, $"WASD to move. Retrieve the Scroll and don't get caught.", new Vector2(25, 2), Color.Maroon);
 
             }
-            Room cur = map[(int)userRoomPosition.X, (int)userRoomPosition.Y];
-            cur.Draw(spriteBatch);
-            player.Draw(spriteBatch);
-            spriteBatch.End();
-
+            //Room cur = map[(int)userRoomPosition.X, (int)userRoomPosition.Y];
+           // cur.Draw(spriteBatch);
+           // player.Draw(spriteBatch);
+           // spriteBatch.End();
+           */
             base.Draw(gameTime);
         }
     }

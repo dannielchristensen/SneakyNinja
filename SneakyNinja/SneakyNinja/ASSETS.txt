@@ -8,3 +8,7 @@ Content/scroll - Created by Danniel Christensen for this Project
 
 Content/Bangers/Bangers-Regular.ttf - Bangers font created by Vernon Adams, released on Google Fonts (https://fonts.google.com/specimen/Bangers) under the Open Font License
 
+Content/NinjaWarrior - Created by Danniel Christensen for this Project
+
+Content/dungeon_wall_32_r - Created by Danniel Christensen for this Project
+
