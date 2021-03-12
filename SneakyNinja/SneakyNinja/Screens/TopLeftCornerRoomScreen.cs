@@ -33,6 +33,8 @@ namespace SneakyNinja.Screens
         }
         public static void Load(ScreenManager screenManager, SneakyNinjas game, PlayerSprite player)
         {
+            foreach (var screen in screenManager.GetScreens())
+                screen.ExitScreen();
             var StandardCornerRoomScreen = new TopLeftCornerRoomScreen(game, player);
             screenManager.AddScreen(StandardCornerRoomScreen);
 
@@ -47,8 +49,10 @@ namespace SneakyNinja.Screens
             wallTexture = _content.Load<Texture2D>("dungeon_wall_32_r");
             room = new Room(game, RoomType.TopLeft, ScreenManager);
             room.LoadContent();
+            Exit = new ExitSprite(game, new Vector2(96, 96));
+            Exit.LoadContent();
+
             Vector2 ExitPos = new Vector2(96, 96);
-            Exit = new ExitSprite(game, ExitPos);
         }
 
         public override void HandleInput(GameTime gameTime, InputState input)
@@ -57,6 +61,8 @@ namespace SneakyNinja.Screens
             if (player.Bounds.CollidesWith(room.door_y))
             {
                 player.Coord.X = 1;
+                player.Coord.Y = 0;
+                
                 player.Position = new Vector2(player.Position.X, 64);
 
                 BottomLeftCornerRoomScreen.Load(ScreenManager, game, player);
@@ -64,8 +70,15 @@ namespace SneakyNinja.Screens
             else if (player.Bounds.CollidesWith(room.door_x))
             {
                 player.Coord.Y = 1;
+                player.Coord.X = 0;
+                
                 player.Position = new Vector2(64, player.Position.Y);
                 TopRightCornerRoomScreen.Load(ScreenManager, game, player);
+            }else if (player.HasScroll && Exit.Bounds.CollidesWith(player.Bounds))
+            {
+                player.PlayerWins = true;
+                EndScreen.Load(ScreenManager, game, player);
+
             }
 
         }
@@ -83,7 +96,7 @@ namespace SneakyNinja.Screens
             }
             if (player.GameOver)
             {
-                ExitScreen();
+                EndScreen.Load(ScreenManager, game, player);
             }
         }
         public override void  Draw(GameTime gameTime)
@@ -92,6 +105,7 @@ namespace SneakyNinja.Screens
             spriteBatch.Begin();
             player.Draw(spriteBatch);
             room.Draw(spriteBatch);
+            Exit.Draw(spriteBatch);
             DrawTopLeftCornerRoom(spriteBatch);
             spriteBatch.End();
 
@@ -115,7 +129,7 @@ namespace SneakyNinja.Screens
     {
         public BoundingCircle Bounds;
         public Vector2 Position;
-        public Texture2D Texture;
+        private Texture2D texture;
         private SneakyNinjas game;
         public ExitSprite(SneakyNinjas game, Vector2 pos)
         {
@@ -125,13 +139,13 @@ namespace SneakyNinja.Screens
         }
         public void LoadContent()
         {
-            Texture = game.Content.Load<Texture2D>("hole");
+            this.texture = game.Content.Load<Texture2D>("hole");
         }
         public void Draw(SpriteBatch spriteBatch)
         {
 
 
-            spriteBatch.Draw(Texture, Position, Color.White);
+            spriteBatch.Draw(texture, Position, Color.White);
 
         }
     }

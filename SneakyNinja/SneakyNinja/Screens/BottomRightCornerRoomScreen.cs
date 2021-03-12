@@ -43,7 +43,7 @@ namespace SneakyNinja.Screens
         {
             base.Activate();
             if (_content == null) _content = new ContentManager(ScreenManager.Game.Services, "Content");
-            room = new Room(game, RoomType.TopLeft, ScreenManager);
+            room = new Room(game, RoomType.BottomRight, ScreenManager);
             room.LoadContent();
 
             wallTexture = game.Content.Load<Texture2D>("dungeon_wall_32_r");
@@ -52,6 +52,8 @@ namespace SneakyNinja.Screens
         }
         public static void Load(ScreenManager screenManager, SneakyNinjas game, PlayerSprite player)
         {
+            foreach (var screen in screenManager.GetScreens())
+                screen.ExitScreen();
             var StandardCornerRoomScreen = new BottomRightCornerRoomScreen(game, player);
             screenManager.AddScreen(StandardCornerRoomScreen);
 
@@ -64,6 +66,7 @@ namespace SneakyNinja.Screens
             if (player.Bounds.CollidesWith(room.door_y))
             {
                 player.Coord.X = 0;
+                player.Coord.Y = 1;
                 player.Position = new Vector2(player.Position.X, game.GraphicsDevice.Viewport.Height - 96);
 
                 TopRightCornerRoomScreen.Load(ScreenManager, game, player);
@@ -71,7 +74,9 @@ namespace SneakyNinja.Screens
             else if (player.Bounds.CollidesWith(room.door_x))
             {
                 player.Coord.Y = 0;
+                player.Coord.X = 1;
                 player.Position = new Vector2(game.GraphicsDevice.Viewport.Width - 96, player.Position.Y);
+                //ExitScreen();
                 BottomLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
             if (player.Bounds.CollidesWith(Scroll.Bounds))
@@ -95,7 +100,7 @@ namespace SneakyNinja.Screens
             }
             if (player.GameOver)
             {
-                ExitScreen();
+                EndScreen.Load(ScreenManager, game, player);
             }
         }
         public override void Draw(GameTime gameTime)

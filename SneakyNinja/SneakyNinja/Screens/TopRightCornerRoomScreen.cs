@@ -32,7 +32,7 @@ namespace SneakyNinja.Screens
         {
             base.Activate();
             if (_content == null) _content = new ContentManager(ScreenManager.Game.Services, "Content");
-            room = new Room(game, RoomType.TopLeft, ScreenManager);
+            room = new Room(game, RoomType.TopRight, ScreenManager);
             room.LoadContent();
             eye = new EyeSprite(this.room, game);
             eye.LoadContent();
@@ -40,6 +40,8 @@ namespace SneakyNinja.Screens
         }
         public static void Load(ScreenManager screenManager, SneakyNinjas game, PlayerSprite player)
         {
+            foreach (var screen in screenManager.GetScreens())
+                screen.ExitScreen();
             var StandardCornerRoomScreen = new TopRightCornerRoomScreen(game, player);
             screenManager.AddScreen(StandardCornerRoomScreen);
 
@@ -52,6 +54,7 @@ namespace SneakyNinja.Screens
             if (player.Bounds.CollidesWith(room.door_y))
             {
                 player.Coord.X = 1;
+                player.Coord.Y = 1;
                 player.Position = new Vector2(player.Position.X, 64);
 
                 BottomRightCornerRoomScreen.Load(ScreenManager, game, player);
@@ -59,6 +62,7 @@ namespace SneakyNinja.Screens
             else if (player.Bounds.CollidesWith(room.door_x))
             {
                 player.Coord.Y = 0;
+                player.Coord.X = 0;
                 player.Position = new Vector2(game.GraphicsDevice.Viewport.Width - 96, player.Position.Y);
                 TopLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }

@@ -57,13 +57,13 @@ namespace SneakyNinja
                 case RoomType.BottomLeft:
                     coord = new Vector2(0, 2);
                     door_x = new BoundingRectangle(ScreenManager.Game.GraphicsDevice.Viewport.Width - 22, 7 * 32, 32, 3*32);
-                    door_y = new BoundingRectangle(11 * 32, -10, 3 * 32, 32);
+                    door_y = new BoundingRectangle(11 * 32, 22, 3 * 32, 32);
 
                     break;
                 case RoomType.BottomRight:
                     coord = new Vector2(2, 2);
                     door_x = new BoundingRectangle(-10, 7 * 32, 32, 3 * 32);
-                    door_y = new BoundingRectangle(11 * 32, -10, 3 * 32, 32);
+                    door_y = new BoundingRectangle(11 * 32, 22, 3 * 32, 32);
                     
 
                     break;
@@ -89,6 +89,11 @@ namespace SneakyNinja
             {
                 w.Draw(spriteBatch);
             }
+            /*var rect = new Rectangle((int)door_x.X, (int)door_x.Y, (int)door_x.Width, (int)door_x.Height);
+            spriteBatch.Draw(walls[0].texture, rect, Color.Blue);
+            rect = new Rectangle((int)door_y.X, (int)door_y.Y, (int)door_y.Width, (int)door_y.Height);
+            spriteBatch.Draw(walls[0].texture, rect, Color.Blue);
+            */
         }
     }
 }
