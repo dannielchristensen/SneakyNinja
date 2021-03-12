@@ -32,7 +32,7 @@ namespace SneakyNinja.Screens
         {
             base.Activate();
             if (_content == null) _content = new ContentManager(ScreenManager.Game.Services, "Content");
-            room = new Room(game, RoomType.TopRight, ScreenManager);
+            room = new Room(game, RoomType.TopLeft, ScreenManager);
             room.LoadContent();
             eye = new EyeSprite(this.room, game);
             eye.LoadContent();
@@ -62,9 +62,42 @@ namespace SneakyNinja.Screens
                 player.Position = new Vector2(game.GraphicsDevice.Viewport.Width - 96, player.Position.Y);
                 TopLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
+
+            if (!player.Detected && Eye.Vision.CollidesWith(player.Bounds))
+            {
+                bool isHidden = false;
+                foreach (WallSprite w in room.Walls)
+                {
+                    if (Eye.Vision.CollidesWith(w.Bounds))
+                    {
+
+                        if (Eye.CheckWall(w.Position, player.Position))
+                            isHidden = true;
+                        break;
+                    }
+                }
+                player.Detected = !isHidden;
+            }
+        }
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            if (player.Detected)
+            {
+                player.DetectedTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (player.DetectedTimer <= 0)
+                {
+                    player.GameOver = true;
+                }
+            }
+            if (player.GameOver)
+            {
+                ExitScreen();
+            }
         }
         public override void Draw(GameTime gameTime)
         {
+
             var spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
             player.Draw(spriteBatch);

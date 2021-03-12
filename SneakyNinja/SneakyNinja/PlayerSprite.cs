@@ -23,11 +23,20 @@ namespace SneakyNinja
         }
         private Vector2 position;
         private bool flipped = false;
+        private SpriteFont bangers;
+        public double TotalTime = 0;
+        public bool PlayerWins = false;
+        public bool HasScroll = false;
         private KeyboardState currentState;
+        private ScrollSprite scroll;
+
         private KeyboardState priorState;
         private Texture2D texture;
         private SneakyNinjas game;
         private BoundingRectangle bounds;
+        public bool Detected = false;
+        public double DetectedTimer = 30;
+        public bool GameOver = false;
         public BoundingRectangle Bounds => bounds;
 
         public PlayerSprite(SneakyNinjas game, Vector2 coord, Vector2 position)
@@ -35,18 +44,24 @@ namespace SneakyNinja
             this.game = game;
             Coord = coord;
             Position = position;
+            scroll = new ScrollSprite(game);
+            scroll.Position = new Vector2(5, 5);
             bounds = new BoundingRectangle(new Vector2(position.X+16, position.Y+32), 32, 32);
         }
 
         public void LoadContent()
         {
             texture = game.Content.Load<Texture2D>("ninja");
+            bangers = game.Content.Load<SpriteFont>("bangers");
+            scroll.LoadContent();
+            
         }
 
         public void Update(GameTime gameTime, WallSprite[] walls, EyeSprite eye)
         {
             priorState = currentState;
             currentState = Keyboard.GetState();
+            TotalTime += gameTime.ElapsedGameTime.TotalSeconds;
             if (currentState.IsKeyDown(Keys.Left) ||
                    currentState.IsKeyDown(Keys.A))
             {
@@ -121,6 +136,18 @@ namespace SneakyNinja
         {
             SpriteEffects spriteEffects = (flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             spriteBatch.Draw(texture, position, null, Color.White, 0f, Vector2.Zero, 1f, spriteEffects, 0);
+            if (Detected)
+                spriteBatch.DrawString(bangers, $"YOU HAVE BEEN DETECTED. TIME REMAINING: {DetectedTimer:##.##}", new Vector2(25, 5), Color.Maroon);
+            else if (TotalTime < 20)
+            {
+                spriteBatch.DrawString(bangers, $"WASD to move. Retrieve the Scroll and don't get caught.", new Vector2(25, 2), Color.Maroon);
+
+            }
+
+            if (HasScroll)
+            {
+                scroll.Draw(spriteBatch);
+            }
         }
     }
 }

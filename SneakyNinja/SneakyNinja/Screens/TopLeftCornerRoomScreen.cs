@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Content;
 
 
 using SneakyNinja.Collisions;
@@ -45,7 +44,7 @@ namespace SneakyNinja.Screens
             if (player == null)
                 player = new PlayerSprite(game, new Vector2(0,0), new Vector2(96, 96));
             player.LoadContent();
-            wallTexture = game.Content.Load<Texture2D>("dungeon_wall_32_r");
+            wallTexture = _content.Load<Texture2D>("dungeon_wall_32_r");
             room = new Room(game, RoomType.TopLeft, ScreenManager);
             room.LoadContent();
             Vector2 ExitPos = new Vector2(96, 96);
@@ -67,6 +66,24 @@ namespace SneakyNinja.Screens
                 player.Coord.Y = 1;
                 player.Position = new Vector2(64, player.Position.Y);
                 TopRightCornerRoomScreen.Load(ScreenManager, game, player);
+            }
+
+        }
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+            if (player.Detected)
+            {
+                player.DetectedTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (player.DetectedTimer <= 0)
+                {
+                    player.GameOver = true;
+                }
+            }
+            if (player.GameOver)
+            {
+                ExitScreen();
             }
         }
         public override void  Draw(GameTime gameTime)

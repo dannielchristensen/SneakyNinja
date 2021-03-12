@@ -43,7 +43,7 @@ namespace SneakyNinja.Screens
         {
             base.Activate();
             if (_content == null) _content = new ContentManager(ScreenManager.Game.Services, "Content");
-            room = new Room(game, RoomType.BottomRight, ScreenManager);
+            room = new Room(game, RoomType.TopLeft, ScreenManager);
             room.LoadContent();
 
             wallTexture = game.Content.Load<Texture2D>("dungeon_wall_32_r");
@@ -59,6 +59,7 @@ namespace SneakyNinja.Screens
 
         public override void HandleInput(GameTime gameTime, InputState input)
         {
+            // make sure to check top door for bottom right room; player went right through door without switching rooms
             player.Update(gameTime, room.Walls, null);
             if (player.Bounds.CollidesWith(room.door_y))
             {
@@ -73,6 +74,29 @@ namespace SneakyNinja.Screens
                 player.Position = new Vector2(game.GraphicsDevice.Viewport.Width - 96, player.Position.Y);
                 BottomLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
+            if (player.Bounds.CollidesWith(Scroll.Bounds))
+            {
+                player.HasScroll = true;
+
+            }
+
+        }
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+            if (player.Detected)
+            {
+                player.DetectedTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (player.DetectedTimer <= 0)
+                {
+                    player.GameOver = true;
+                }
+            }
+            if (player.GameOver)
+            {
+                ExitScreen();
+            }
         }
         public override void Draw(GameTime gameTime)
         {
@@ -81,8 +105,10 @@ namespace SneakyNinja.Screens
             player.Draw(spriteBatch);
 
             room.Draw(spriteBatch);
-            scroll.Draw(spriteBatch);
+            if(!player.HasScroll)
+                scroll.Draw(spriteBatch);
             DrawBottomRightCornerRoom(spriteBatch);
+            
             spriteBatch.End();
         }
         private void DrawBottomRightCornerRoom(SpriteBatch sb)

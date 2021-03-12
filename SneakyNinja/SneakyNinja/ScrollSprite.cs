@@ -38,6 +38,7 @@ namespace SneakyNinja
             position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
             bounds = new BoundingRectangle(Position, 32, 32);
         }
+
         public ScrollSprite(Room r, SneakyNinjas g)
         {
             room = r;
