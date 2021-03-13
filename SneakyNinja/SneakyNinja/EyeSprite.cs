@@ -24,6 +24,7 @@ namespace SneakyNinja
         private Vector2 position;
         public Vector2 Position;
         private BoundingRectangle vision;
+        private BoundingRectangle[] vision_directions = new BoundingRectangle[4];
         public BoundingRectangle Vision => vision;
         public BoundingCircle Bounds => bounds;
         private BoundingCircle bounds;
@@ -32,9 +33,10 @@ namespace SneakyNinja
 
         public EyeSprite(Room r, SneakyNinjas game)
         {
-            spawn();
             room = r;
             this.game = game;
+
+            spawn();
 
         }
         private void spawn()
@@ -43,6 +45,15 @@ namespace SneakyNinja
             Vector2 pos = new Vector2(rand.Next(5, 21)*32, rand.Next(4, 11)*32);
             position = pos;
             bounds = new BoundingCircle(pos + new Vector2(32, 32), 32);
+
+            vision = new BoundingRectangle(position.X + 64, position.Y, game.GraphicsDevice.Viewport.Width, 64);
+            vision_directions[0] = vision;
+            vision = new BoundingRectangle(position.X, 0, 64, position.Y);
+            vision_directions[1] = vision;
+            vision = new BoundingRectangle(0, position.Y, position.X, 64);
+            vision_directions[2] = vision;
+            vision = new BoundingRectangle(position.X, position.Y + 64, 64, game.GraphicsDevice.Viewport.Height);
+            vision_directions[3] = vision;
 
         }
 
@@ -71,60 +82,30 @@ namespace SneakyNinja
             {
                 case 1:
                     source = new Rectangle(0, 0, 64, 64);
-                    vision = new BoundingRectangle(position.X+64,position.Y, game.GraphicsDevice.Viewport.Width,64);
+                    vision = vision_directions[0];
                     break;
                 case 2:
                     source = new Rectangle(64, 0, 64, 64);
-                    vision = new BoundingRectangle(position.X, 0, 64, position.Y);
+                    vision = vision_directions[1];
                     break;
                 case 3:
                     source = new Rectangle(0, 64, 64, 64);
-                    vision = new BoundingRectangle(0, position.Y, position.X, 64);
+                    vision = vision_directions[2];
                     break;
                 case 4:
                     source = new Rectangle(64, 64, 64, 64);
-                    vision = new BoundingRectangle(position.X, position.Y+64, 64, game.GraphicsDevice.Viewport.Height);
+                    vision = vision_directions[3];
                     break;
                 default:
                     source = new Rectangle(0, 0, 64, 64);
+                    vision = vision_directions[0];
                     break;
             }
             spriteBatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         }
 
-        public bool CheckWall(Vector2 wallPosition, Vector2 playerPosition)
-        {
-            bool isWallCoveringPlayer = false;
-            switch (directionAnimation)
-            {
-                // right
-                case 1:
-                    if (position.X < wallPosition.X && wallPosition.X < playerPosition.X && (playerPosition.Y + 64 > wallPosition.Y && playerPosition.Y + 12 < wallPosition.Y +32))
-                        isWallCoveringPlayer = true;
-                    break;
-                // up
-                case 2:
-                    if (position.Y > wallPosition.Y && wallPosition.Y > playerPosition.Y && (playerPosition.X + 64 > wallPosition.X && playerPosition.X + 12 < wallPosition.X + 32))
-                        isWallCoveringPlayer = true;
-                    break;
-                // left
-                case 3:
-                    if (position.X > wallPosition.X && wallPosition.X > playerPosition.X && (playerPosition.Y+64 > wallPosition.Y && playerPosition.Y+12 < wallPosition.Y + 32))
-                        isWallCoveringPlayer = true;
-                    break;
-                // down
-                case 4:
-                    if (position.Y < wallPosition.Y && wallPosition.Y < playerPosition.Y && (playerPosition.X + 64 > wallPosition.X && playerPosition.X + 12 < wallPosition.X + 32))
-                        isWallCoveringPlayer = true;
-                    break;
-                default:
-                    break;
-
-
-            }
-            return isWallCoveringPlayer;
-        }
+       
             
     }
 }

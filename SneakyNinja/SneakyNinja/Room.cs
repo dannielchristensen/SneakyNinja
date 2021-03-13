@@ -89,11 +89,8 @@ namespace SneakyNinja
             {
                 w.Draw(spriteBatch);
             }
-            /*var rect = new Rectangle((int)door_x.X, (int)door_x.Y, (int)door_x.Width, (int)door_x.Height);
-            spriteBatch.Draw(walls[0].texture, rect, Color.Blue);
-            rect = new Rectangle((int)door_y.X, (int)door_y.Y, (int)door_y.Width, (int)door_y.Height);
-            spriteBatch.Draw(walls[0].texture, rect, Color.Blue);
-            */
+            
+            
         }
     }
 }

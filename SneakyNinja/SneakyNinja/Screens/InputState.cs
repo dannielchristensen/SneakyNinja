@@ -9,7 +9,7 @@ namespace SneakyNinja.Screens
     public class InputState
     {
         public KeyboardState CurrentKeyboardState;
-        private KeyboardState _lastKeyboardState;
+        public KeyboardState _lastKeyboardState;
 
         public InputState()
         {
@@ -24,6 +24,19 @@ namespace SneakyNinja.Screens
             _lastKeyboardState = CurrentKeyboardState;
             CurrentKeyboardState = Keyboard.GetState();
         }
+        public bool IsKeyPressed(Keys key) { 
 
+
+                return CurrentKeyboardState.IsKeyDown(key);
+
+        }
+        public bool IsNewKeyPress(Keys key)
+        {
+
+
+                return (CurrentKeyboardState.IsKeyDown(key) &&
+                        _lastKeyboardState.IsKeyUp(key));
+
+        }
     }
 }

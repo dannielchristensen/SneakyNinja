@@ -32,8 +32,14 @@ namespace SneakyNinja.Screens
         {
             base.Activate();
             if (_content == null) _content = new ContentManager(ScreenManager.Game.Services, "Content");
-            room = new Room(game, RoomType.TopRight, ScreenManager);
-            room.LoadContent();
+            room = ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y];
+            if (room == null)
+            {
+                room = new Room(game, RoomType.TopRight, ScreenManager);
+                room.LoadContent();
+                ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y] = room;
+
+            }
             eye = new EyeSprite(this.room, game);
             eye.LoadContent();
             wallTexture = game.Content.Load<Texture2D>("dungeon_wall_32_r");
@@ -69,18 +75,8 @@ namespace SneakyNinja.Screens
 
             if (!player.Detected && Eye.Vision.CollidesWith(player.Bounds))
             {
-                bool isHidden = false;
-                foreach (WallSprite w in room.Walls)
-                {
-                    if (Eye.Vision.CollidesWith(w.Bounds))
-                    {
 
-                        if (Eye.CheckWall(w.Position, player.Position))
-                            isHidden = true;
-                        break;
-                    }
-                }
-                player.Detected = !isHidden;
+                player.Detected = true;
             }
         }
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)

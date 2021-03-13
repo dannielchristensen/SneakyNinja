@@ -43,8 +43,14 @@ namespace SneakyNinja.Screens
         {
             base.Activate();
             if (_content == null) _content = new ContentManager(ScreenManager.Game.Services, "Content");
-            room = new Room(game, RoomType.BottomRight, ScreenManager);
-            room.LoadContent();
+            room = ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y];
+            if (room == null)
+            {
+                room = new Room(game, RoomType.BottomRight, ScreenManager);
+                room.LoadContent();
+                ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y] = room;
+
+            }
 
             wallTexture = game.Content.Load<Texture2D>("dungeon_wall_32_r");
             scroll = new ScrollSprite(this.room, game);

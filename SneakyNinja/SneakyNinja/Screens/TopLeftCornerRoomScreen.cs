@@ -47,12 +47,22 @@ namespace SneakyNinja.Screens
                 player = new PlayerSprite(game, new Vector2(0,0), new Vector2(96, 96));
             player.LoadContent();
             wallTexture = _content.Load<Texture2D>("dungeon_wall_32_r");
-            room = new Room(game, RoomType.TopLeft, ScreenManager);
-            room.LoadContent();
-            Exit = new ExitSprite(game, new Vector2(96, 96));
-            Exit.LoadContent();
+            room = ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y];
+            if (room == null)
+            {
+                room = new Room(game, RoomType.TopLeft, ScreenManager);
+                room.LoadContent();
+                ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y] = room;
 
-            Vector2 ExitPos = new Vector2(96, 96);
+            }
+            if (Exit == null)
+            {
+                Exit = new ExitSprite(game, new Vector2(96, 96));
+                Exit.LoadContent();
+
+                Vector2 ExitPos = new Vector2(96, 96);
+            }
+
         }
 
         public override void HandleInput(GameTime gameTime, InputState input)

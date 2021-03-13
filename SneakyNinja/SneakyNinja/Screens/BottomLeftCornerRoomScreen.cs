@@ -18,6 +18,7 @@ namespace SneakyNinja.Screens
         private Room room;
         private Texture2D wallTexture;
         private PlayerSprite player;
+        WallSprite wallBehind;
         public Room Room => room;
         public EyeSprite Eye => eye;
 
@@ -33,8 +34,14 @@ namespace SneakyNinja.Screens
         {
             base.Activate();
             if (_content == null) _content = new ContentManager(ScreenManager.Game.Services, "Content");
-            room = new Room(game, RoomType.BottomLeft, ScreenManager);
-            room.LoadContent();
+            room = ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y];
+            if (room == null)
+            {
+                room = new Room(game, RoomType.BottomLeft, ScreenManager);
+                room.LoadContent();
+                ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y] = room;
+
+            }
 
             eye = new EyeSprite(this.room, game);
             eye.LoadContent();
@@ -51,7 +58,6 @@ namespace SneakyNinja.Screens
         public override void HandleInput(GameTime gameTime, InputState input)
         {
             player.Update(gameTime, room.Walls, null);
-            eye.Update(gameTime);
             if (player.Bounds.CollidesWith(room.door_x))
             {
                 player.Coord.Y = 1;
@@ -67,26 +73,16 @@ namespace SneakyNinja.Screens
                 player.Position = new Vector2(player.Position.X, game.GraphicsDevice.Viewport.Height - 96);
                 TopLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
-            if (!player.Detected && Eye.Vision.CollidesWith(player.Bounds))
+            if (!player.Detected && eye.Vision.CollidesWith(player.Bounds))
             {
-                bool isHidden = false;
-                foreach (WallSprite w in room.Walls)
-                {
-                    if (Eye.Vision.CollidesWith(w.Bounds))
-                    {
-
-                        if (Eye.CheckWall(w.Position, player.Position))
-                            isHidden = true;
-                        break;
-                    }
-                }
-                player.Detected = !isHidden;
+                player.Detected = true;
             }
 
         }
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            eye.Update(gameTime);
 
             if (player.Detected)
             {

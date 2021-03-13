@@ -21,6 +21,8 @@ namespace SneakyNinja.Screens
 
         private bool _isInitialized;
 
+        public Room[,] Rooms = new Room[2,2];
+
         /// <summary>
         /// A SpriteBatch shared by all GameScreens
         /// </summary>
@@ -60,7 +62,7 @@ namespace SneakyNinja.Screens
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-
+            Font = _content.Load<SpriteFont>("bangers");
 
             // Tell each of the screens to load thier content 
             foreach (var screen in _screens)

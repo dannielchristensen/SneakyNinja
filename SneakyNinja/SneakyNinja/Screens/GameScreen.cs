@@ -159,6 +159,7 @@ namespace SneakyNinja.Screens
         /// <param name="gameTime">An object representing time in the game</param>
         /// <param name="input">An object representing input</param>
         public virtual void HandleInput(GameTime gameTime, InputState input) { }
+        public PlayerIndex? ControllingPlayer { protected get; set; }
 
         /// <summary>
         /// Draws the GameScreen.  Only called with the screen is active, and not 
