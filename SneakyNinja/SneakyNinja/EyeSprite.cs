@@ -22,7 +22,7 @@ namespace SneakyNinja
         private double animationTimer;
         private SneakyNinjas game;
         private Vector2 position;
-        public Vector2 Position;
+        public Vector2 Position => position;
         private BoundingRectangle vision;
         private BoundingRectangle[] vision_directions = new BoundingRectangle[4];
         public BoundingRectangle Vision => vision;
@@ -54,7 +54,7 @@ namespace SneakyNinja
             vision_directions[2] = vision;
             vision = new BoundingRectangle(position.X, position.Y + 64, 64, game.GraphicsDevice.Viewport.Height);
             vision_directions[3] = vision;
-
+            
         }
 
         public void LoadContent()
@@ -64,7 +64,7 @@ namespace SneakyNinja
         public void Update(GameTime gameTime)
         {
             animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            if(animationTimer > 2.0)
+            if(animationTimer >= 2.0)
             {
                 animationTimer -= 2;
                 directionAnimation++;
@@ -72,9 +72,77 @@ namespace SneakyNinja
                     directionAnimation = 1;
             }
 
-
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public bool CheckRay(Vector2 PlayerPosition, WallSprite[] walls)
+        {
+            Vector2 origin = this.bounds.Center;
+            double x = PlayerPosition.X - origin.X;
+            double y = origin.Y - PlayerPosition.Y;
+            double h =  Math.Sqrt(x * x + y * y);
+            double m;
+            float convert =  180 / (float) Math.PI;
+            float angle;
+            switch (directionAnimation)
+            {
+                // right
+                case 1:
+                    if (PlayerPosition.X < origin.X)
+                        return false;
+                    m = (double) y / x;
+                    angle = (float) Math.Atan(m) * convert;
+                    if(angle > 30 || angle < -30)
+                    {
+                        return false;
+                    }
+                    break;
+                case 2:
+                    // up
+                    if (PlayerPosition.Y > origin.Y)
+                        return false;
+                    m = (double)x / h;
+                    angle = (float) Math.Acos(m) * convert;
+                    if (angle > 120 || angle < 60)
+                        return false;
+                    break;
+                case 3:
+                    // left
+                    if (PlayerPosition.X > origin.X)
+                        return false;
+                    m = (double)y / x;
+                    angle = (float)Math.Atan(m) * convert;
+                    if (angle > 30 || angle < -30)
+                    {
+                        return false;
+                    }
+                    break;
+                case 4:
+                    // down
+
+                    if (PlayerPosition.Y < origin.Y)
+                        return false;
+                    m = (double)x / h;
+                    angle = (float)Math.Acos(m) * convert;
+                    if (angle > 120 || angle < 60)
+                        return false;
+                    break;
+                default:
+
+                    break;
+            }
+            Ray r = new Ray(new Vector3(origin, 0), new Vector3(PlayerPosition, 3));
+            foreach (WallSprite w in walls)
+            {
+                BoundingBox b = new BoundingBox(new Vector3(w.Position, 0), new Vector3(w.Position.X + 32, w.Position.Y + 32, 0));
+                float? w_dist = r.Intersects(b);
+                float playerDist = (float)Math.Sqrt(Math.Pow(PlayerPosition.X - this.Position.X, 2) + Math.Pow(PlayerPosition.Y - this.Position.Y, 2));
+                if (w_dist != null && w_dist < playerDist)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public void Draw(SpriteBatch spriteBatch, Vector2 PlayerPosition)
         {
 
             var source = new Rectangle();
@@ -101,8 +169,6 @@ namespace SneakyNinja
                     vision = vision_directions[0];
                     break;
             }
-            spriteBatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
         }
 
        

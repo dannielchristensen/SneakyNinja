@@ -73,7 +73,7 @@ namespace SneakyNinja.Screens
                 TopLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
 
-            if (!player.Detected && Eye.Vision.CollidesWith(player.Bounds))
+            if (Eye.CheckRay(player.Position, room.Walls))
             {
 
                 player.Detected = true;
