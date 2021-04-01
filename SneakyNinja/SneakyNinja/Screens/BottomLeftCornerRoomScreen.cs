@@ -105,7 +105,7 @@ namespace SneakyNinja.Screens
             player.Draw(spriteBatch);
 
             room.Draw(spriteBatch);
-            eye.Draw(spriteBatch);
+            eye.Draw(spriteBatch, player.Position);
             DrawBottomLeftCornerRoom(spriteBatch);
             spriteBatch.End();
         }
