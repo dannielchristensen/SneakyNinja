@@ -92,7 +92,7 @@ namespace SneakyNinja.Screens
             }
             if (player.GameOver)
             {
-                ExitScreen();
+                EndScreen.Load(ScreenManager, game, player);
             }
         }
         public override void Draw(GameTime gameTime)

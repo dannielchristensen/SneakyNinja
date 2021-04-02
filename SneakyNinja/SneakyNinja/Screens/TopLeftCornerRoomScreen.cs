@@ -95,6 +95,8 @@ namespace SneakyNinja.Screens
             }else if (player.HasScroll && Exit.Bounds.CollidesWith(player.Bounds))
             {
                 player.PlayerWins = true;
+                this.game.Components.Remove(dust);
+
                 EndScreen.Load(ScreenManager, game, player);
 
             }
@@ -114,6 +116,8 @@ namespace SneakyNinja.Screens
             }
             if (player.GameOver)
             {
+                this.game.Components.Remove(dust);
+
                 EndScreen.Load(ScreenManager, game, player);
             }
             Random r = new Random();
