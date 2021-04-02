@@ -16,7 +16,8 @@ namespace SneakyNinja.Screens
         private Texture2D wallTexture;
         private ScrollSprite scroll;
         private PlayerSprite player;
-
+        private bool shaking;
+        private float shakeTime;
         public ScrollSprite Scroll
         {
             get
@@ -88,6 +89,7 @@ namespace SneakyNinja.Screens
             if (player.Bounds.CollidesWith(Scroll.Bounds))
             {
                 player.HasScroll = true;
+                shaking = true;
 
             }
 
@@ -111,8 +113,15 @@ namespace SneakyNinja.Screens
         }
         public override void Draw(GameTime gameTime)
         {
+            Matrix shakeTransform = Matrix.Identity;
+            if (shaking)
+            {
+                shakeTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                shakeTransform = Matrix.CreateTranslation(10 * MathF.Sin(shakeTime), 10 * MathF.Cos(shakeTime), 0);
+                if (shakeTime > 3000) shaking = false;
+            }
             var spriteBatch = ScreenManager.SpriteBatch;
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix:shakeTransform);
             player.Draw(spriteBatch);
 
             room.Draw(spriteBatch);

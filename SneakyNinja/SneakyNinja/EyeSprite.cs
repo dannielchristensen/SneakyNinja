@@ -169,6 +169,8 @@ namespace SneakyNinja
                     vision = vision_directions[0];
                     break;
             }
+            spriteBatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
         }
 
        
