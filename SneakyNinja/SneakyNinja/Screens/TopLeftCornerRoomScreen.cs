@@ -4,13 +4,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using SneakyNinja.Particles;
 
 
 using SneakyNinja.Collisions;
 
 namespace SneakyNinja.Screens
 {
-    public class TopLeftCornerRoomScreen : GameScreen
+    public class TopLeftCornerRoomScreen : GameScreen, IParticleEmitter
     {
         private ContentManager _content;
         private SneakyNinjas game;
@@ -18,7 +19,10 @@ namespace SneakyNinja.Screens
         private Texture2D wallTexture;
         private PlayerSprite player;
         public ExitSprite Exit;
-
+        DustParticleSystem dust;
+        public Vector2 Position { get; private set;  }
+        public Vector2 Velocity { get; private set;  }
+        
 
         public Room Room => room;
         public TopLeftCornerRoomScreen(SneakyNinjas game)
@@ -59,9 +63,11 @@ namespace SneakyNinja.Screens
             {
                 Exit = new ExitSprite(game, new Vector2(96, 96));
                 Exit.LoadContent();
-
                 Vector2 ExitPos = new Vector2(96, 96);
             }
+            dust = new DustParticleSystem(this.game, this);
+            this.game.Components.Add(dust);
+
 
         }
 
@@ -74,6 +80,7 @@ namespace SneakyNinja.Screens
                 player.Coord.Y = 0;
                 
                 player.Position = new Vector2(player.Position.X, 64);
+                this.game.Components.Remove(dust);
 
                 BottomLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
@@ -81,7 +88,8 @@ namespace SneakyNinja.Screens
             {
                 player.Coord.Y = 1;
                 player.Coord.X = 0;
-                
+                this.game.Components.Remove(dust);
+
                 player.Position = new Vector2(64, player.Position.Y);
                 TopRightCornerRoomScreen.Load(ScreenManager, game, player);
             }else if (player.HasScroll && Exit.Bounds.CollidesWith(player.Bounds))
@@ -108,6 +116,9 @@ namespace SneakyNinja.Screens
             {
                 EndScreen.Load(ScreenManager, game, player);
             }
+            Random r = new Random();
+            this.Position = Exit.Position + new Vector2(16, 16);
+            Velocity = new Vector2(r.Next(-5, 6), r.Next(-5, 6));
         }
         public override void  Draw(GameTime gameTime)
         {
@@ -156,6 +167,7 @@ namespace SneakyNinja.Screens
 
 
             spriteBatch.Draw(texture, Position, Color.White);
+            spriteBatch.Draw(texture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 
         }
     }

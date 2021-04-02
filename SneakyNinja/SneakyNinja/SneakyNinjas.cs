@@ -11,7 +11,7 @@ namespace SneakyNinja
 {
 
 
-    public class SneakyNinjas : Game
+    public class SneakyNinjas : Game 
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
