@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-
 namespace SneakyNinja.Screens
 {
     public class BottomRightCornerRoomScreen : GameScreen
@@ -29,7 +28,6 @@ namespace SneakyNinja.Screens
                 scroll = value;
             }
         }
-        
 
 
         public Room Room => room;
@@ -75,6 +73,7 @@ namespace SneakyNinja.Screens
                 player.Coord.X = 0;
                 player.Coord.Y = 1;
                 player.Position = new Vector2(player.Position.X, game.GraphicsDevice.Viewport.Height - 96);
+                scroll.RemoveComponents();
 
                 TopRightCornerRoomScreen.Load(ScreenManager, game, player);
             }
@@ -84,6 +83,8 @@ namespace SneakyNinja.Screens
                 player.Coord.X = 1;
                 player.Position = new Vector2(game.GraphicsDevice.Viewport.Width - 96, player.Position.Y);
                 //ExitScreen();
+                scroll.RemoveComponents();
+
                 BottomLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
             if (player.Bounds.CollidesWith(Scroll.Bounds))
@@ -108,6 +109,7 @@ namespace SneakyNinja.Screens
             }
             if (player.GameOver)
             {
+                scroll.RemoveComponents();
                 EndScreen.Load(ScreenManager, game, player);
             }
         }

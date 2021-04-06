@@ -62,6 +62,7 @@ namespace SneakyNinja.Screens
                 player.Coord.X = 1;
                 player.Coord.Y = 1;
                 player.Position = new Vector2(player.Position.X, 64);
+                eye.RemoveComponents();
 
                 BottomRightCornerRoomScreen.Load(ScreenManager, game, player);
             }
@@ -70,14 +71,12 @@ namespace SneakyNinja.Screens
                 player.Coord.Y = 0;
                 player.Coord.X = 0;
                 player.Position = new Vector2(game.GraphicsDevice.Viewport.Width - 96, player.Position.Y);
+                eye.RemoveComponents();
+
                 TopLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
 
-            if (Eye.CheckRay(player.Position, room.Walls))
-            {
 
-                player.Detected = true;
-            }
         }
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
@@ -88,11 +87,18 @@ namespace SneakyNinja.Screens
                 if (player.DetectedTimer <= 0)
                 {
                     player.GameOver = true;
+                    eye.RemoveComponents();
+
                 }
             }
             if (player.GameOver)
             {
                 EndScreen.Load(ScreenManager, game, player);
+            }
+            if (!player.Detected && Eye.Vision.CollidesWith(player.Bounds))
+            {
+
+                player.Detected = true;
             }
         }
         public override void Draw(GameTime gameTime)

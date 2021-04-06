@@ -42,9 +42,13 @@ namespace SneakyNinja.Screens
                 ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y] = room;
 
             }
+            if(eye == null)
+            {
+                
+                eye = new EyeSprite(this.room, game);
+                eye.LoadContent();
+            }
 
-            eye = new EyeSprite(this.room, game);
-            eye.LoadContent();
             wallTexture = game.Content.Load<Texture2D>("dungeon_wall_32_r");
         }
         public static void Load(ScreenManager screenManager, SneakyNinjas game, PlayerSprite player)
@@ -63,7 +67,7 @@ namespace SneakyNinja.Screens
                 player.Coord.Y = 1;
                 player.Coord.X = 1;
                 player.Position = new Vector2(64, player.Position.Y);
-
+                eye.RemoveComponents();
                 BottomRightCornerRoomScreen.Load(ScreenManager, game, player);
             }
             else if (player.Bounds.CollidesWith(room.door_y))
@@ -71,12 +75,11 @@ namespace SneakyNinja.Screens
                 player.Coord.X = 0;
                 player.Coord.Y = 0;
                 player.Position = new Vector2(player.Position.X, game.GraphicsDevice.Viewport.Height - 96);
+                eye.RemoveComponents();
+
                 TopLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
-            if (Eye.CheckRay(player.Position, room.Walls))
-            {
-                player.Detected = true;
-            }
+            
 
         }
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
@@ -90,11 +93,18 @@ namespace SneakyNinja.Screens
                 if (player.DetectedTimer <= 0)
                 {
                     player.GameOver = true;
+                    eye.RemoveComponents();
+
                 }
             }
             if (player.GameOver)
             {
                 EndScreen.Load(ScreenManager, game, player);
+            }
+            if (!player.Detected && Eye.Vision.CollidesWith(player.Bounds))
+            {
+
+                player.Detected = true;
             }
         }
         public override void Draw(GameTime gameTime)

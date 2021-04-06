@@ -12,3 +12,15 @@ Content/NinjaWarrior - Created by Danniel Christensen for this Project
 
 Content/dungeon_wall_32_r - Created by Danniel Christensen for this Project
 
+Content/vision_particle - Created by Danniel Christensen for this Project
+
+Content/vision_single - Created by Danniel Christensen for this Project
+
+Content/particle - Obtained from ParticleSystemExample project in CIS 580
+
+Content/smoke - Obtained from ParticleSystemExample project in CIS 580
+
+Content/explosion - Obtained from ParticleSystemExample project in CIS 580
+
+
+
