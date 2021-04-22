@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using SneakyNinja.Collisions;
 
 namespace SneakyNinja
@@ -37,6 +38,9 @@ namespace SneakyNinja
         public bool Detected = false;
         public double DetectedTimer = 20;
         public bool GameOver = false;
+        private SoundEffect moveSound;
+        private double moveSoundTimer = 0;
+        private bool moveKeysHeldDown = false;
         public BoundingRectangle Bounds => bounds;
 
         public PlayerSprite(SneakyNinjas game, Vector2 coord, Vector2 position)
@@ -53,6 +57,7 @@ namespace SneakyNinja
         {
             texture = game.Content.Load<Texture2D>("ninja");
             bangers = game.Content.Load<SpriteFont>("bangers");
+            moveSound = game.Content.Load<SoundEffect>("Jump6");
             scroll.LoadContent();
             
         }
@@ -62,12 +67,13 @@ namespace SneakyNinja
             priorState = currentState;
             currentState = Keyboard.GetState();
             TotalTime += gameTime.ElapsedGameTime.TotalSeconds;
+            bool temp = false;
             if (currentState.IsKeyDown(Keys.Left) ||
                    currentState.IsKeyDown(Keys.A))
             {
                 checkWalls(eye, walls, new Vector2(-100 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0));
                 flipped = true;
-
+                temp = true;
             }
 
             if (currentState.IsKeyDown(Keys.Right) ||
@@ -75,6 +81,7 @@ namespace SneakyNinja
             {
                 checkWalls(eye, walls, new Vector2(100 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0));
                 flipped = false;
+                temp = true;
 
             }
 
@@ -82,7 +89,7 @@ namespace SneakyNinja
                 currentState.IsKeyDown(Keys.W))
             {
                 checkWalls(eye, walls, new Vector2(0, -100 * (float)gameTime.ElapsedGameTime.TotalSeconds));
-                
+                temp = true;
 
             }
 
@@ -90,12 +97,31 @@ namespace SneakyNinja
                 currentState.IsKeyDown(Keys.S))
             {
                 checkWalls(eye, walls, new Vector2(0, 100 * (float)gameTime.ElapsedGameTime.TotalSeconds));
+                temp = true;
 
             }
 
-            if(position.X < 32 && !(Coord.Y == 1 && position.Y > 6.5 * 32 && position.Y < (8.5 * 32)))
+            if(temp == false)
+            {
+                moveKeysHeldDown = false;
+                moveSoundTimer = .6;
+            }
+            else if (moveKeysHeldDown == true || temp == true)
+            {
+                moveKeysHeldDown = true;
+                if (moveSoundTimer >= .6)
+                {
+                    moveSound.Play();
+                    moveSoundTimer = 0;
+                }
+                else
+                    moveSoundTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (position.X < 32 && !(Coord.Y == 1 && position.Y > 6.5 * 32 && position.Y < (8.5 * 32)))
             {
                 position.X = 32;
+
             }
             else if(position.X > game.GraphicsDevice.Viewport.Width - 80 && !(Coord.Y == 0 && position.Y > 6.5 * 32 && position.Y < (8.5 * 32)))
             {

@@ -318,6 +318,52 @@
           "build/MonoGame.Content.Builder.Task.targets": {}
         }
       },
+      "MonoGame.Framework.DesktopGL/3.8.0.1641": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/MonoGame.Framework.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MonoGame.Framework.dll": {}
+        },
+        "build": {
+          "build/MonoGame.Framework.DesktopGL.targets": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libSDL2-2.0.so.0": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/linux-x64/native/libopenal.so.1": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx/native/libSDL2-2.0.0.dylib": {
+            "assetType": "native",
+            "rid": "osx"
+          },
+          "runtimes/osx/native/libopenal.1.dylib": {
+            "assetType": "native",
+            "rid": "osx"
+          },
+          "runtimes/win-x64/native/SDL2.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x64/native/soft_oal.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/SDL2.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          },
+          "runtimes/win-x86/native/soft_oal.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
       "MonoGame.Framework.WindowsDX/3.8.0.1641": {
         "type": "package",
         "dependencies": {
@@ -2739,6 +2785,31 @@
         "tools/netcoreapp3.1/any/x64/soft_oal.dll",
         "tools/netcoreapp3.1/any/x86/SDL2.dll",
         "tools/netcoreapp3.1/any/x86/soft_oal.dll"
+      ]
+    },
+    "MonoGame.Framework.DesktopGL/3.8.0.1641": {
+      "sha512": "rJQlrlHQbnOECYV6EcQ8GlGRQ2lzPTroXQcyyOZ0ki+BQRSJEN2zVBm9skqLiXya348aGAfTSSGTaSKjAy9NaA==",
+      "type": "package",
+      "path": "monogame.framework.desktopgl/3.8.0.1641",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "build/MonoGame.Framework.DesktopGL.targets",
+        "lib/net452/MonoGame.Framework.dll",
+        "lib/net452/MonoGame.Framework.xml",
+        "lib/netstandard2.0/MonoGame.Framework.dll",
+        "lib/netstandard2.0/MonoGame.Framework.xml",
+        "monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512",
+        "monogame.framework.desktopgl.nuspec",
+        "runtimes/linux-x64/native/libSDL2-2.0.so.0",
+        "runtimes/linux-x64/native/libopenal.so.1",
+        "runtimes/osx/native/libSDL2-2.0.0.dylib",
+        "runtimes/osx/native/libopenal.1.dylib",
+        "runtimes/win-x64/native/SDL2.dll",
+        "runtimes/win-x64/native/soft_oal.dll",
+        "runtimes/win-x86/native/SDL2.dll",
+        "runtimes/win-x86/native/soft_oal.dll"
       ]
     },
     "MonoGame.Framework.WindowsDX/3.8.0.1641": {
@@ -7376,6 +7447,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "MonoGame.Content.Builder.Task >= 3.8.0.1641",
+      "MonoGame.Framework.DesktopGL >= 3.8.0.1641",
       "MonoGame.Framework.WindowsDX >= 3.8.0.1641"
     ]
   },
@@ -7385,11 +7457,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
+      "projectUniqueName": "C:\\Users\\danni\\Desktop\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
       "projectName": "SneakyNinja",
-      "projectPath": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
+      "projectPath": "C:\\Users\\danni\\Desktop\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\SneakyNinja.csproj",
       "packagesPath": "C:\\Users\\danni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danni\\Documents\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\obj\\",
+      "outputPath": "C:\\Users\\danni\\Desktop\\School\\Spring 2021\\CIS 580\\SneakyNinja\\SneakyNinja\\SneakyNinja\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\danni\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7422,6 +7494,10 @@
             "target": "Package",
             "version": "[3.8.0.1641, )"
           },
+          "MonoGame.Framework.DesktopGL": {
+            "target": "Package",
+            "version": "[3.8.0.1641, )"
+          },
           "MonoGame.Framework.WindowsDX": {
             "target": "Package",
             "version": "[3.8.0.1641, )"
@@ -7445,7 +7521,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SneakyNinja.Screens
 {
@@ -17,6 +18,8 @@ namespace SneakyNinja.Screens
         private PlayerSprite player;
         private bool shaking;
         private float shakeTime;
+        private SoundEffect pickupSound;
+
         public ScrollSprite Scroll
         {
             get
@@ -50,7 +53,7 @@ namespace SneakyNinja.Screens
                 ScreenManager.Rooms[(int)player.Coord.X, (int)player.Coord.Y] = room;
 
             }
-
+            pickupSound = game.Content.Load<SoundEffect>("Pickup_Coin4");
             wallTexture = game.Content.Load<Texture2D>("dungeon_wall_32_r");
             scroll = new ScrollSprite(this.room, game);
             scroll.LoadContent();
@@ -87,11 +90,11 @@ namespace SneakyNinja.Screens
 
                 BottomLeftCornerRoomScreen.Load(ScreenManager, game, player);
             }
-            if (player.Bounds.CollidesWith(Scroll.Bounds))
+            if (player.HasScroll == false && player.Bounds.CollidesWith(Scroll.Bounds))
             {
                 player.HasScroll = true;
                 shaking = true;
-
+                pickupSound.Play();
             }
 
         }

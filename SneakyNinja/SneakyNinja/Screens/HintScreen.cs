@@ -36,7 +36,10 @@ namespace SneakyNinja.Screens
             spriteBatch.Begin();
 
             spriteBatch.DrawString(ScreenManager.Font, $"The eyes are all seeing and can see through walls.", new Vector2(100, 100), Color.Black);
-            spriteBatch.DrawString(ScreenManager.Font, $"Press enter to return to the main menu.", new Vector2(100, 130), Color.Black);
+            spriteBatch.DrawString(ScreenManager.Font, $"WASD to move.", new Vector2(100, 160), Color.Black);
+            spriteBatch.DrawString(ScreenManager.Font, $"Find the Scroll and return to the portal.", new Vector2(100, 190), Color.Black);
+            spriteBatch.DrawString(ScreenManager.Font, $"Be careful. The scroll may be pressure plated.", new Vector2(100, 220), Color.Black);
+            spriteBatch.DrawString(ScreenManager.Font, $"Press enter to return to the main menu.", new Vector2(100, 250), Color.Black);
 
 
 

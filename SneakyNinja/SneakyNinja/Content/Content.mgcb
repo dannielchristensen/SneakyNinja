@@ -68,6 +68,12 @@
 /processorParam:TextureFormat=Color
 /build:hole.png
 
+#begin Jump6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Jump6.wav
+
 #begin ninja.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -97,6 +103,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:particle.png
+
+#begin Pickup_Coin4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Pickup_Coin4.wav
 
 #begin scroll.png
 /importer:TextureImporter
